@@ -101,3 +101,7 @@ To install the required packages, please ensure that you have Python installed o
   ```bash
   pip3 install -r requirements.txt
   ```
+5. Run the app
+  ```bash
+  uvicorn app.main:app --reload
+  ```
