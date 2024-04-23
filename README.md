@@ -85,3 +85,19 @@ Del resultado entregado, se valorará:
 * La defensa del proyecto por parte del candidato,
 * La aplicación de buenas prácticas de programación (clean code)
 * La implementación de algún test unitario y, si procede, de integración.  
+
+## Installation Instructions
+
+To install the required packages, please ensure that you have Python installed on your system. Then, follow these steps:
+
+1. Clone the repository or download the project files.
+2. Navigate to the project directory.
+3. Create a virtual environment (recommended):
+  ```bash
+   python -m venv venv
+   source venv/bin/activate 
+   ````
+4. Install dependencies
+  ```bash
+  pip3 install -r requirements.txt
+  ```
