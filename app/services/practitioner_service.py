@@ -1,17 +1,25 @@
-from ..models.practitioner import Practitioner
 from bs4 import BeautifulSoup
-from typing import Dict, Optional
 import httpx 
+from typing import Dict, Optional
+from ..models.practitioner import Practitioner
 
 def fetch_practitioner_data(member_id: str) -> Practitioner:
-    """Query external endpoint for practitioner data."""
+    """
+    Query external endpoint for practitioner data.
+
+    Args:
+    member_id (str): member ID from request parameters.
+
+    Returns:
+    dict: A dictionary containing formatted practitioner data if extraction is successful, None otherwise.
+    """
     url = f"https://cgcom-interno.cgcom.es/RegistroMedicos/PUBBusquedaPublica_busquedaDetalle_ajax.action?numeroColegiado={member_id}"
     cookies = {'JSESSIONID': '0553653B8A1214B92AE4EC97CB948D71'}
     
     try:
         response = httpx.get(url, cookies=cookies)
         response.raise_for_status()
-        
+
         # Parse the HTML content
         practitioner_data = parse_practitioner_html(response.text)
         if practitioner_data:
@@ -28,7 +36,15 @@ def fetch_practitioner_data(member_id: str) -> Practitioner:
 
 
 def parse_practitioner_html(html_content: str) -> Optional[dict]:
-    """Extract content from the html response."""
+    """
+    Extracts and formats practitioner data from HTML content.
+
+    Args:
+    html_content (str): HTML content as a string from which data needs to be extracted.
+
+    Returns:
+    dict: A dictionary containing formatted practitioner data if extraction is successful, None otherwise.
+    """
     soup = BeautifulSoup(html_content, 'lxml')
 
     data = {}
