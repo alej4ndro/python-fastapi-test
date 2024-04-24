@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from fastapi import HTTPException
 import httpx 
 from typing import Dict, Optional
 from ..models.practitioner import Practitioner
@@ -20,19 +21,15 @@ def fetch_practitioner_data(member_id: str) -> Practitioner:
         response = httpx.get(url, cookies=cookies)
         response.raise_for_status()
 
-        # Parse the HTML content
         practitioner_data = parse_practitioner_html(response.text)
         if practitioner_data:
             return Practitioner(**practitioner_data)
         else:
             return None
     except httpx.HTTPStatusError as exc:
-        print(
-            f"Error response {exc.response.status_code} while fetching data: {exc.response.text}")
-        raise
+        raise HTTPException(status_code=exc.response.status_code, detail=str(exc))
     except httpx.RequestError as exc:
-        print(f"An error occurred while requesting {exc.request.url!r}.")
-        raise
+        raise HTTPException(status_code=500, detail=str(exc))
 
 
 def parse_practitioner_html(html_content: str) -> Optional[dict]:
