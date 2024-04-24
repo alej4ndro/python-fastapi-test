@@ -9,9 +9,9 @@ router = APIRouter()
 @router.get("/practitioner", response_model=Any, responses={
     400: {"description": "Invalid member ID value"},
 })
-def get_practitioner(memberId: str = Query(..., description="Member ID to be considered for filter")):
+def get_practitioner(member_id: str = Query(..., description="Member ID to be considered for filter")):
     try:
-        practitioner_data = fetch_practitioner_data(memberId)
+        practitioner_data = fetch_practitioner_data(member_id)
         if not practitioner_data:
             raise HTTPException(
                 status_code=404, detail="Practitioner not found")
