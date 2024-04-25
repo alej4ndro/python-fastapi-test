@@ -15,7 +15,7 @@ def fetch_practitioner_data(member_id: str) -> Practitioner:
     dict: A dictionary containing formatted practitioner data if extraction is successful, None otherwise.
     """
     url = f"https://cgcom-interno.cgcom.es/RegistroMedicos/PUBBusquedaPublica_busquedaDetalle_ajax.action?numeroColegiado={member_id}"
-    cookies = {'JSESSIONID': '0553653B8A1214B92AE4EC97CB948D71'}
+    cookies = {'JSESSIONID': '685D47F7FD8C5FBF038B6CD0138D8FED'}
     
     try:
         response = httpx.get(url, cookies=cookies)
