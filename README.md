@@ -86,22 +86,43 @@ Del resultado entregado, se valorará:
 * La aplicación de buenas prácticas de programación (clean code)
 * La implementación de algún test unitario y, si procede, de integración.  
 
-## Installation Instructions
+## Set Up Instructions
 
 To install the required packages, please ensure that you have Python installed on your system. Then, follow these steps:
 
 1. Clone the repository or download the project files.
 2. Navigate to the project directory.
 3. Create a virtual environment (recommended):
-  ```bash
-   python -m venv venv
-   source venv/bin/activate 
-   ````
-4. Install dependencies
-  ```bash
-  pip3 install -r requirements.txt
-  ```
-5. Run the app
-  ```bash
-  uvicorn app.main:app --reload
-  ```
+    ```bash
+    python -m venv venv
+    source venv/bin/activate 
+    ````
+4. Create .env file in the root of the project with the following structure.
+    ```
+    JSESSIONID=<your-session-id>
+    ```
+* Note 1: To retrieve a valid cookie you need to:
+  - Navigate to [this page](https://www.cgcom.es/servicios/consulta-publica-de-colegiados).
+  - Access Developer Tools from your browser.
+  - Navigate to Application > Cookies > https://cgcom-interno.cgcom.es
+  - Get the JSESSIONID cookie value
+* Note 2: JSESSIONID is a Session cookie so it does not have a specific expiration time set; instead, it lasts until the browser is closed. Make sure to gather a new cookie if you close your browser and update the ```.env``` file accordingly. 
+5. Install dependencies
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+6. Run the app
+    ```bash
+    uvicorn app.main:app --reload
+    ```
+7. Query the practitioner endpoint using Postman at \
+    http://127.0.0.1:8000/practitioner?member_id={some_member_id}
+    - Here are a few valid member ids to try:
+      - 030302050
+      - 020204761
+      - 010102958
+  
+8. Run unit and integration tests using the command:
+    ```bash
+    pytest
+    ```
