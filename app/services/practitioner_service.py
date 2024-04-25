@@ -3,6 +3,7 @@ from fastapi import HTTPException
 import httpx 
 from typing import Dict, Optional
 from ..models.practitioner import Practitioner
+import os
 
 def fetch_practitioner_data(member_id: str) -> Practitioner:
     """
@@ -14,8 +15,13 @@ def fetch_practitioner_data(member_id: str) -> Practitioner:
     Returns:
     dict: A dictionary containing formatted practitioner data if extraction is successful, None otherwise.
     """
-    url = f"https://cgcom-interno.cgcom.es/RegistroMedicos/PUBBusquedaPublica_busquedaDetalle_ajax.action?numeroColegiado={member_id}"
-    cookies = {'JSESSIONID': '685D47F7FD8C5FBF038B6CD0138D8FED'}
+    api_url = os.getenv("API_URL")
+    session_id = os.getenv("JSESSIONID")
+    if not api_url or not session_id:
+        raise HTTPException(status_code=500, detail="ENV variables not set up")
+    
+    url = f"{api_url}?numeroColegiado={member_id}"
+    cookies = {'JSESSIONID': session_id}
     
     try:
         response = httpx.get(url, cookies=cookies)

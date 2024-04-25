@@ -15,6 +15,7 @@ router = APIRouter()
     responses={
         200: {"description": "Successful operation"},
         400: {"description": "Invalid member ID value"},
+        500: {"description": "Internal Server Error"},
     }
 )
 def get_practitioner(member_id: str = Query(..., description="Member ID to be considered for filter")):
